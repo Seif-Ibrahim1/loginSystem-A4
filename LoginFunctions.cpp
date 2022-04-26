@@ -17,8 +17,9 @@ void getChoices(){
 
     int choice;
 
+    cout << "Welcome to Our login System ! " << endl;
+
     while(true){
-        cout << "Welcome to Our login System ! " << endl;
         cout << "Enter your choice : " << endl;
         cout << "(1) Register " << endl;
         cout << "(2) Login " << endl;
