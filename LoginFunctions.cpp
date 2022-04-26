@@ -1,24 +1,25 @@
 #include "LoginFunctions.h"
 
-User::User(string ID, string Name, string Email, string Password){
+User::User(string ID, string Name, string Email, string Password) {
     id = ID;
     name = Name;
     email = Email;
     password = Password;
 };
 
-User::User(string Name, string Email, string Password){
+User::User(string Name, string Email, string Password) {
     name = Name;
     email = Email;
     password = Password;
 };
 
-void getChoices(){
+void getChoices() {
 
     int choice;
 
-    while(true){
-        cout << "Welcome to Our login System ! " << endl;
+    cout << "Welcome to Our login System ! " << endl;
+
+    while (true) {
         cout << "Enter your choice : " << endl;
         cout << "(1) Register " << endl;
         cout << "(2) Login " << endl;
@@ -26,33 +27,29 @@ void getChoices(){
         cout << "(4) Exit " << endl;
 
         cin >> choice;
-        if(choice == 1){
-            Register();
-        }
-        else if(choice == 2){
+        if (choice == 1) {
+            registerUser();
+        } else if (choice == 2) {
             login();
-        }
-        else if(choice == 3){
+        } else if (choice == 3) {
             changePassword();
-        }
-        else if(choice == 4){
+        } else if (choice == 4) {
             cout << "Thanks for using Our login System, GoodBye " << endl;
             exit(0);
-        }
-        else{
+        } else {
             cout << "Wrong Choice !" << endl;
         }
     }
 }
 
-void Register(){
+void registerUser() {
 
 }
 
-void login(){
+void login() {
 
 }
 
-void changePassword(){
+void changePassword() {
 
 }
