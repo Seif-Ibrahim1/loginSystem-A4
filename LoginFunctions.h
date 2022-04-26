@@ -14,8 +14,8 @@ struct User
     string password;
     string oldPasswords; // array separated by a delimiter
 
-    User(string, string, string, string);
-    User(string, string, string);   
+    inline User(string, string, string, string);
+    inline User(string, string, string);
 };
 
 

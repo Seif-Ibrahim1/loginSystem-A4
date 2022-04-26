@@ -1,0 +1,3 @@
+C:/Users/Youssef Moataz/CLionProjects/loginSystem-A4/cmake-build-debug/CMakeFiles/loginSystem_A4.dir
+C:/Users/Youssef Moataz/CLionProjects/loginSystem-A4/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Youssef Moataz/CLionProjects/loginSystem-A4/cmake-build-debug/CMakeFiles/rebuild_cache.dir
