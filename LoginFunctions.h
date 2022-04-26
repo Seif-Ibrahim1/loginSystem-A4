@@ -18,5 +18,11 @@ struct User
     inline User(string, string, string);
 };
 
+void getChoices();
+void Register();
+void login();
+void changePassword();
+void exit();
+
 
 #endif
