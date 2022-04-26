@@ -1,4 +1,5 @@
 #include<iostream>
+
 using namespace std;
 
 #ifndef LOGINFUNCTIONS_H
@@ -6,8 +7,7 @@ using namespace std;
 
 const string delPass = "#*#";
 
-struct User
-{
+struct User {
     string id = "20210";
     string name;
     string email;
@@ -15,14 +15,17 @@ struct User
     string oldPasswords; // array separated by a delimiter
 
     inline User(string, string, string, string);
+
     inline User(string, string, string);
 };
 
 inline void getChoices();
-inline void Register();
-inline void login();
-inline void changePassword();
 
+inline void registerUser();
+
+inline void login();
+
+inline void changePassword();
 
 
 #endif

@@ -1,8 +1,10 @@
 #include <iostream>
 #include "LoginFunctions.cpp"
+
 using namespace std;
-int main()
-{
+
+int main() {
+
     getChoices();
 
     return 0;
