@@ -18,11 +18,11 @@ struct User
     inline User(string, string, string);
 };
 
-void getChoices();
-void Register();
-void login();
-void changePassword();
-void exit();
+inline void getChoices();
+inline void Register();
+inline void login();
+inline void changePassword();
+
 
 
 #endif
