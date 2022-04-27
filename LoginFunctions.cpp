@@ -75,6 +75,37 @@ void registerUser() {
 
 void login() {
 
+    string id;
+    string password;
+
+    bool validUser = false;
+
+    while (!validUser){
+
+        cout << "Please enter your ID :" << endl;
+        cin >> id;
+
+        cout << "Please enter your password : " << endl;
+        cin >> password;
+
+        User userToLogin = getUserByID(id);
+
+        if (userToLogin.name == "" || userToLogin.password == "" || userToLogin.email == ""){
+            continue;
+        }
+
+        if (userToLogin.password == password){
+
+            cout << "Successful login, welcome " + userToLogin.name;
+            validUser = true;
+            continue;
+
+        }else{
+            cout << "Failed login. Try again." << endl;
+        }
+
+    }
+
 }
 
 void changePassword() {

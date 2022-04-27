@@ -25,7 +25,6 @@ struct User {
 
     inline User(string, string, string);
 
-    inline User();
 };
 
 inline vector<User> listUsers;
