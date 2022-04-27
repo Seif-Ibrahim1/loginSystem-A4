@@ -1,7 +1,8 @@
 #include "LoginFunctions.h"
 
 // Main constructor
-User::User(string ID, string Name, string Email, string Phone, string Password, vector<string> OldPasswords, int PasswordTrials) {
+User::User(string ID, string Name, string Email, string Phone, string Password, vector<string> OldPasswords,
+           int PasswordTrials) {
     id = ID;
     name = Name;
     email = Email;
@@ -139,7 +140,7 @@ string decrypt(string encryptedPass) {
 
 }
 
-void makeListOfIDs(){
+void makeListOfIDs() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
     char name[50];
 
@@ -162,25 +163,85 @@ void makeListOfIDs(){
 
 }
 
-void makeListOfUsers(){
-//    fstream userDataFile("UsersData.txt", ios::app | ios::in);
-//    char name[50];
-//
-//    int lineNumber = 0;
-//    int counter = 1; // not used yet
-//
-//    while (!userDataFile.eof()) {
-//
-//        lineNumber++;
-//
-//        userDataFile.getline(name, 50);
-//
-//        if (lineNumber % 8 == 1) {
-//            listIDs.push_back(name);
-//        }
-//
-//        counter++;
-//    }
-//    userDataFile.close();
+void makeListOfUsers() {
+    fstream userDataFile("UsersData.txt", ios::app | ios::in);
+    char line[50];
 
+    int lineNumber = 0;
+    int counter = 1; // not used yet
+
+    string id = "20210";
+    string name;
+    string email;
+    string phone;
+    string password;
+    vector<string> oldPasswords; // array separated by a delimiter
+    int passwordTrials;
+
+    while (!userDataFile.eof()) {
+
+        lineNumber++;
+
+        userDataFile.getline(line, 50);
+
+        if (lineNumber % 8 == 1) {
+            id = line;
+        } else if (lineNumber % 8 == 2) {
+            name = line;
+        } else if (lineNumber % 8 == 3) {
+            email = line;
+        } else if (lineNumber % 8 == 4) {
+            phone = line;
+        } else if (lineNumber % 8 == 5) {
+            password = line;
+        } else if (lineNumber % 8 == 6) {
+            oldPasswords = convertStringToVector(line);
+        } else if (lineNumber % 8 == 7) {
+            passwordTrials = stoi(line);
+        }
+
+        if (counter == 8) {
+
+            User user = User(id, name, email, phone, password, oldPasswords, passwordTrials);
+
+            listUsers.push_back(user);
+
+            counter = 0;
+
+        }
+
+
+        counter++;
+    }
+    userDataFile.close();
+
+}
+
+vector<string> convertStringToVector(string oldPass) {
+
+    vector<string> oldPasswords;
+
+    int dilem = oldPass.find(delPass);
+
+    string firstPass = oldPass.substr(0, dilem);
+
+    oldPasswords.push_back(firstPass);
+
+    oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
+
+    dilem = oldPass.find(delPass);
+
+    string secondPass = oldPass.substr(0, dilem);
+
+    oldPasswords.push_back(secondPass);
+
+    oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
+
+    dilem = oldPass.find(delPass);
+
+    string thirdPass = oldPass.substr(0, dilem);
+
+    oldPasswords.push_back(thirdPass);
+
+    return oldPasswords;
 }
