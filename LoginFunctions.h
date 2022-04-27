@@ -20,7 +20,8 @@ struct User {
     string email;
     string phone;
     string password;
-    string oldPasswords; // array separated by a delimiter
+    vector<string> oldPasswords; // array separated by a delimiter
+    int passwordTrials;
 
     inline User(string, string, string, string, string);
 
