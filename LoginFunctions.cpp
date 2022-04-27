@@ -1,9 +1,10 @@
 #include "LoginFunctions.h"
 
-User::User(string ID, string Name, string Email, string Password) {
+User::User(string ID, string Name, string Email, string Phone, string Password) {
     id = ID;
     name = Name;
     email = Email;
+    phone = Phone;
     password = Password;
 };
 
@@ -51,5 +52,66 @@ void login() {
 }
 
 void changePassword() {
+
+}
+
+
+
+// get index of character in string
+int indexOf(string str, char character) {
+
+    for (int i = 0; i < str.length(); i++) {
+
+        if (character == str[i]) {
+            return i;
+        }
+
+    }
+
+    return 0;
+}
+
+
+string encrypt(string pass) {
+
+    string encryptedPass;
+
+    for (char c: pass) {
+
+        // print spaces as is
+        if (isalpha(c)) {
+            // print the character by getting its index from the alphabet and using the index in the reverse alphabet
+            // convert to upper case
+            encryptedPass += alphabetReversed[indexOf(alphabet, toupper(c))];
+
+        } else {
+            encryptedPass += c;
+        }
+
+    }
+
+    return encryptedPass;
+
+}
+
+string decrypt(string encryptedPass) {
+
+    string pass;
+
+    for (char c : encryptedPass) {
+
+        // print spaces as is
+        if (isalpha(c)) {
+            // print the character by getting its index from the reversed alphabet and using the index in the alphabet
+            // convert to upper case
+            pass += alphabet[indexOf(alphabetReversed, toupper(c))];
+
+        } else {
+            pass += c;
+        }
+
+    }
+
+    return pass;
 
 }
