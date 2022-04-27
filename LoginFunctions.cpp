@@ -55,8 +55,6 @@ void changePassword() {
 
 }
 
-
-
 // get index of character in string
 int indexOf(string str, char character) {
 
