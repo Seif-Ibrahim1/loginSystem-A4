@@ -1,5 +1,16 @@
 #include "LoginFunctions.h"
 
+// Main constructor
+User::User(string ID, string Name, string Email, string Phone, string Password, vector<string> OldPasswords, int PasswordTrials) {
+    id = ID;
+    name = Name;
+    email = Email;
+    phone = Phone;
+    password = Password;
+    oldPasswords = OldPasswords;
+    passwordTrials = PasswordTrials;
+};
+
 User::User(string ID, string Name, string Email, string Phone, string Password) {
     id = ID;
     name = Name;
@@ -12,7 +23,7 @@ User::User(string Name, string Email, string Password) {
     name = Name;
     email = Email;
     password = Password;
-};
+}
 
 void getChoices() {
 
@@ -148,5 +159,28 @@ void makeListOfIDs(){
         counter++;
     }
     userDataFile.close();
+
+}
+
+void makeListOfUsers(){
+//    fstream userDataFile("UsersData.txt", ios::app | ios::in);
+//    char name[50];
+//
+//    int lineNumber = 0;
+//    int counter = 1; // not used yet
+//
+//    while (!userDataFile.eof()) {
+//
+//        lineNumber++;
+//
+//        userDataFile.getline(name, 50);
+//
+//        if (lineNumber % 8 == 1) {
+//            listIDs.push_back(name);
+//        }
+//
+//        counter++;
+//    }
+//    userDataFile.close();
 
 }
