@@ -1,6 +1,7 @@
 #include<iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -23,10 +24,14 @@ struct User {
     vector<string> oldPasswords; // array separated by a delimiter
     int passwordTrials;
 
+    inline User(string, string, string, string, string, vector<string>, int);
+
     inline User(string, string, string, string, string);
 
     inline User(string, string, string);
 };
+
+inline vector<string> listUsers;
 
 inline vector<string> listIDs;
 
@@ -43,5 +48,9 @@ inline int indexOf(string str, char character);
 inline string encrypt(string pass);
 
 inline string decrypt(string encryptedPass);
+
+inline void makeListOfIDs();
+
+inline void makeListOfUsers();
 
 #endif
