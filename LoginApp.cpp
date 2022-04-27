@@ -6,5 +6,9 @@ int main() {
 
 //    getChoices();
 
+    makeListOfUsers();
+
+    cout << listUsers[0].oldPasswords[2];
+
     return 0;
 }
