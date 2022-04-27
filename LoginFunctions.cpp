@@ -320,10 +320,19 @@ istream& operator>> (istream&read, User human){
     string phone;
     string password;
 
+    cout << "Enter an ID : " << endl;
     read >> id;
+
+    cout << "Enter a name : " << endl;
     read >> name;
+
+    cout << "Enter an email : " << endl;
     read >> email;
+
+    cout << "Enter a phone : " << endl;
     read >> phone;
+
+    cout << "Enter a password : " << endl;
     read >> password;
 
     human.id = id;
