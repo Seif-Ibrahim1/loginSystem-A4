@@ -13,7 +13,7 @@ static char *const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static char *const alphabetReversed = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
 // ---DO NOT CHANGE---
 
-const string delPass = "#*#";
+const string delPass = "#$#";
 
 struct User {
     string id = "20210";
@@ -31,7 +31,7 @@ struct User {
     inline User(string, string, string);
 };
 
-inline vector<string> listUsers;
+inline vector<User> listUsers;
 
 inline vector<string> listIDs;
 
@@ -52,5 +52,7 @@ inline string decrypt(string encryptedPass);
 inline void makeListOfIDs();
 
 inline void makeListOfUsers();
+
+inline vector<string> convertStringToVector(string oldPass);
 
 #endif
