@@ -96,7 +96,7 @@ void login() {
 
         if (userToLogin.password == password){
 
-            cout << "Successful login, welcome " + userToLogin.name;
+            cout << "Successful login, welcome " + userToLogin.name + "\n\n";
             validUser = true;
             continue;
 

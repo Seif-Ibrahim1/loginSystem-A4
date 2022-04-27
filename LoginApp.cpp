@@ -4,9 +4,9 @@ using namespace std;
 
 int main() {
 
-//    getChoices();
-
     makeListOfUsers();
+
+    getChoices();
 
 //    listUsers[0].password = "ay haga";
 //    cout << listUsers[0].password;
