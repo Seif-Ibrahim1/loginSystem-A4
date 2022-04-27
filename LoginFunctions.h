@@ -1,6 +1,7 @@
 #include<iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -28,6 +29,8 @@ struct User {
     inline User(string, string, string);
 };
 
+inline vector<string> listUsers;
+
 inline vector<string> listIDs;
 
 inline void getChoices();
@@ -43,5 +46,7 @@ inline int indexOf(string str, char character);
 inline string encrypt(string pass);
 
 inline string decrypt(string encryptedPass);
+
+inline void makeListOfIDs();
 
 #endif

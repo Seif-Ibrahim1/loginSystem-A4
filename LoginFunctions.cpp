@@ -45,6 +45,20 @@ void getChoices() {
 
 void registerUser() {
 
+    // Helpful for writing in file
+//    fstream userDataFile("UsersData.txt", ios::app);
+//    char ch;
+//
+//    while (true)
+//    {
+//        cin.get(ch);
+//        userDataFile.put(ch);
+//        if (ch == '.')
+//            break;
+//    }
+//    userDataFile.close();
+
+
 }
 
 void login() {
@@ -111,5 +125,28 @@ string decrypt(string encryptedPass) {
     }
 
     return pass;
+
+}
+
+void makeListOfIDs(){
+    fstream userDataFile("UsersData.txt", ios::app | ios::in);
+    char name[50];
+
+    int lineNumber = 0;
+    int counter = 1; // not used yet
+
+    while (!userDataFile.eof()) {
+
+        lineNumber++;
+
+        userDataFile.getline(name, 50);
+
+        if (lineNumber % 8 == 1) {
+            listIDs.push_back(name);
+        }
+
+        counter++;
+    }
+    userDataFile.close();
 
 }
