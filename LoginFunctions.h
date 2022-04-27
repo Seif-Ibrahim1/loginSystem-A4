@@ -24,6 +24,8 @@ struct User {
     inline User(string, string, string, string, string);
 
     inline User(string, string, string);
+
+    inline User();
 };
 
 inline vector<User> listUsers;
@@ -37,6 +39,8 @@ inline void registerUser();
 inline void login();
 
 inline void changePassword();
+
+inline User getUserByID(string id);
 
 inline int indexOf(string str, char character);
 
