@@ -26,6 +26,10 @@ User::User(string Name, string Email, string Password) {
     password = Password;
 }
 
+User::User(){
+
+}
+
 void getChoices() {
 
     int choice;
@@ -41,7 +45,7 @@ void getChoices() {
 
         cin >> choice;
         if (choice == 1) {
-            registerUser();
+            cin >> User();
         } else if (choice == 2) {
             login();
         } else if (choice == 3) {
@@ -55,21 +59,25 @@ void getChoices() {
     }
 }
 
-void registerUser() {
+void registerUser(User human) {
 
-    // Helpful for writing in file
-//    fstream userDataFile("UsersData.txt", ios::app);
-//    char ch;
-//
-//    while (true)
-//    {
-//        cin.get(ch);
-//        userDataFile.put(ch);
-//        if (ch == '.')
-//            break;
-//    }
-//    userDataFile.close();
+    fstream userDataFile("UsersData.txt", ios::app);
+    string userData = human.id + '\n';
+    userData += human.name + '\n';
+    userData += human.email + '\n';
+    userData += human.phone + '\n';
+    userData += human.password +'\n';
+    userData += human.password +'\n';
+    userData += "0 ";
+    
 
+    for(int i = 0; i < userData.length(); i++)
+    {
+        userDataFile.put(userData[i]);
+    }
+
+    userDataFile.put('\n');
+    userDataFile.close();
 
 }
 
@@ -288,4 +296,27 @@ vector<string> convertStringToVector(string oldPass) {
     oldPasswords.push_back(thirdPass);
 
     return oldPasswords;
+}
+
+istream& operator>> (istream& read, User human){
+	
+    string id;
+    string name;
+    string email;
+    string phone;
+    string password;
+
+    read >> id;
+    read >> name;
+    read >> email;
+    read >> phone;
+    read >> password;
+
+    human.id = id;
+    human.name = name;
+    human.email = email;
+    human.phone = phone;
+    human.password = password;
+
+    registerUser(human);
 }

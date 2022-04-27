@@ -25,6 +25,8 @@ struct User {
 
     inline User(string, string, string);
 
+    inline User();
+
 };
 
 inline vector<User> listUsers;
@@ -33,7 +35,7 @@ inline vector<string> listIDs;
 
 inline void getChoices();
 
-inline void registerUser();
+inline void registerUser(User);
 
 inline void login();
 
@@ -57,5 +59,7 @@ inline void makeListOfIDs();
 inline void makeListOfUsers();
 
 inline vector<string> convertStringToVector(string oldPass);
+
+inline istream& operator>> (istream&, User);
 
 #endif
