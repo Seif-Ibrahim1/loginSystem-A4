@@ -40,9 +40,9 @@ inline void changePassword();
 
 inline int indexOf(string str, char character);
 
-// ---DO NOT CHANGE--- alphabet characters and reversed
-static char *const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static char *const alphabetReversed = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
+// ---DO NOT CHANGE--- ALPHABET characters and reversed
+const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const string ALPHABET_REVERSED = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
 // ---DO NOT CHANGE---
 
 inline string encrypt(string pass);
