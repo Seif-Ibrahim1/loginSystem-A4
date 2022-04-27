@@ -69,7 +69,7 @@ void registerUser(User human) {
     userData += human.password +'\n';
     userData += human.password +'\n';
     userData += "0 ";
-    
+
 
     for(int i = 0; i < userData.length(); i++)
     {
@@ -104,7 +104,7 @@ void login() {
 
         if (userToLogin.password == password){
 
-            cout << "Successful login, welcome " + userToLogin.name + "\n\n";
+            cout << "Successful login, welcome " + userToLogin.name;
             validUser = true;
             continue;
 
@@ -299,7 +299,7 @@ vector<string> convertStringToVector(string oldPass) {
 }
 
 istream& operator>> (istream& read, User human){
-	
+
     string id;
     string name;
     string email;
