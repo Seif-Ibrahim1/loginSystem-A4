@@ -81,6 +81,19 @@ void changePassword() {
 
 }
 
+User getUserByID(string id){
+
+    for (User user: listUsers) {
+
+        if (user.id == id){
+            return user;
+        }
+
+    }
+
+    return listUsers[0];
+}
+
 // get index of character in string
 int indexOf(string str, char character) {
 

@@ -8,8 +8,10 @@ int main() {
 
     makeListOfUsers();
 
-    listUsers[0].password = "ay haga";
-    cout << listUsers[0].password;
+//    listUsers[0].password = "ay haga";
+//    cout << listUsers[0].password;
+
+//    cout << getUserByID("20210").oldPasswords[2];
 
     return 0;
 }
