@@ -62,6 +62,7 @@ void getChoices() {
 void registerUser(User human) {
 
     fstream userDataFile("UsersData.txt", ios::app);
+
     string userData = human.id + '\n';
     userData += human.name + '\n';
     userData += human.email + '\n';
@@ -69,7 +70,7 @@ void registerUser(User human) {
     userData += human.password +'\n';
     userData += human.password +'\n';
     userData += "0 ";
-    
+
 
     for(int i = 0; i < userData.length(); i++)
     {
@@ -104,7 +105,7 @@ void login() {
 
         if (userToLogin.password == password){
 
-            cout << "Successful login, welcome " + userToLogin.name;
+            cout << "Successful login, welcome " + userToLogin.name << endl << endl;
             validUser = true;
             continue;
 
@@ -236,23 +237,23 @@ void makeListOfUsers() {
 
         userDataFile.getline(line, 50);
 
-        if (lineNumber % 8 == 1) {
+        if (lineNumber % 7 == 1) {
             id = line;
-        } else if (lineNumber % 8 == 2) {
+        } else if (lineNumber % 7 == 2) {
             name = line;
-        } else if (lineNumber % 8 == 3) {
+        } else if (lineNumber % 7 == 3) {
             email = line;
-        } else if (lineNumber % 8 == 4) {
+        } else if (lineNumber % 7 == 4) {
             phone = line;
-        } else if (lineNumber % 8 == 5) {
+        } else if (lineNumber % 7 == 5) {
             password = line;
-        } else if (lineNumber % 8 == 6) {
+        } else if (lineNumber % 7 == 6) {
             oldPasswords = convertStringToVector(line);
-        } else if (lineNumber % 8 == 7) {
-            passwordTrials = stoi(line);
+        } else if (lineNumber % 7 == 0) {
+            passwordTrials = stoi(to_string(line[0])) - 48;
         }
 
-        if (counter == 8) {
+        if (counter == 7) {
 
             User user = User(id, name, email, phone, password, oldPasswords, passwordTrials);
 
@@ -275,31 +276,44 @@ vector<string> convertStringToVector(string oldPass) {
 
     int dilem = oldPass.find(delPass);
 
-    string firstPass = oldPass.substr(0, dilem);
+    if (dilem != -1){
+        string firstPass = oldPass.substr(0, dilem);
 
-    oldPasswords.push_back(firstPass);
+        oldPasswords.push_back(firstPass);
 
-    oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
+        oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
 
-    dilem = oldPass.find(delPass);
+        dilem = oldPass.find(delPass);
 
-    string secondPass = oldPass.substr(0, dilem);
+        if (dilem != -1) {
 
-    oldPasswords.push_back(secondPass);
+            string secondPass = oldPass.substr(0, dilem);
 
-    oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
+            oldPasswords.push_back(secondPass);
 
-    dilem = oldPass.find(delPass);
+            oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
 
-    string thirdPass = oldPass.substr(0, dilem);
+            dilem = oldPass.find(delPass);
 
-    oldPasswords.push_back(thirdPass);
+            if (dilem != -1) {
+
+                string thirdPass = oldPass.substr(0, dilem);
+
+                oldPasswords.push_back(thirdPass);
+
+            }
+
+        }
+
+    }
+
+
 
     return oldPasswords;
 }
 
-istream& operator>> (istream& read, User human){
-	
+istream& operator>> (istream&read, User human){
+
     string id;
     string name;
     string email;
@@ -319,4 +333,6 @@ istream& operator>> (istream& read, User human){
     human.password = password;
 
     registerUser(human);
+
+    return read;
 }
