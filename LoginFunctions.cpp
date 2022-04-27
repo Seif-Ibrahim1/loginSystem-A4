@@ -104,9 +104,9 @@ string encrypt(string pass) {
 
         // print spaces as is
         if (isalpha(c)) {
-            // print the character by getting its index from the alphabet and using the index in the reverse alphabet
+            // print the character by getting its index from the ALPHABET and using the index in the reverse ALPHABET
             // convert to upper case
-            encryptedPass += alphabetReversed[indexOf(alphabet, toupper(c))];
+            encryptedPass += ALPHABET_REVERSED[indexOf(ALPHABET, toupper(c))];
 
         } else {
             encryptedPass += c;
@@ -126,9 +126,9 @@ string decrypt(string encryptedPass) {
 
         // print spaces as is
         if (isalpha(c)) {
-            // print the character by getting its index from the reversed alphabet and using the index in the alphabet
+            // print the character by getting its index from the reversed ALPHABET and using the index in the ALPHABET
             // convert to upper case
-            pass += alphabet[indexOf(alphabetReversed, toupper(c))];
+            pass += ALPHABET[indexOf(ALPHABET_REVERSED, toupper(c))];
 
         } else {
             pass += c;
