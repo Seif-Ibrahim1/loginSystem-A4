@@ -8,11 +8,6 @@ using namespace std;
 #ifndef LOGINFUNCTIONS_H
 #define LOGINFUNCTIONS_H
 
-// ---DO NOT CHANGE--- alphabet characters and reversed
-static char *const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-static char *const alphabetReversed = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
-// ---DO NOT CHANGE---
-
 const string delPass = "#$#";
 
 struct User {
@@ -44,6 +39,11 @@ inline void login();
 inline void changePassword();
 
 inline int indexOf(string str, char character);
+
+// ---DO NOT CHANGE--- alphabet characters and reversed
+static char *const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static char *const alphabetReversed = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
+// ---DO NOT CHANGE---
 
 inline string encrypt(string pass);
 
