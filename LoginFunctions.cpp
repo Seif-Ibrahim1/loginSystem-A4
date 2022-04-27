@@ -96,7 +96,7 @@ string decrypt(string encryptedPass) {
 
     string pass;
 
-    for (char c : encryptedPass) {
+    for (char c: encryptedPass) {
 
         // print spaces as is
         if (isalpha(c)) {
