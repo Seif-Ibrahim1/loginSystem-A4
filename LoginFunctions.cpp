@@ -218,7 +218,7 @@ bool saveAllUsersToFile() {
 
     string userData;
 
-    fstream userDataFile("UsersDataNew.txt", ios::out);
+    fstream userDataFile("UsersData.txt", ios::out);
 
     for (User user: listUsers) {
 
