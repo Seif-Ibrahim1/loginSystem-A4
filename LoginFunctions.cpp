@@ -153,6 +153,25 @@ void changePassword() {
         newPassword = getPasswordAndCheck(true);
 
         // check if added before
+        while (true){
+
+            bool validNewPassword = true;
+
+            newPassword = getPasswordAndCheck(true);
+
+            for(string pass : currentUser.oldPasswords){
+                if (newPassword == pass){
+                    validNewPassword = false;
+                    break;
+                }
+            }
+
+
+            if (validNewPassword){
+                break;
+            }
+
+        }
 
     }
 
