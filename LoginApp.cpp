@@ -8,6 +8,5 @@ int main() {
 
     getChoices();
 
-}
     return 0;
 }
