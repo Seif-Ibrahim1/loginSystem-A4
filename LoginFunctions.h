@@ -9,6 +9,7 @@ using namespace std;
 #define LOGINFUNCTIONS_H
 
 const string delPass = "#$#";
+const int numberOfLinesForUser = 6;
 
 struct User {
     string id = "20210";
@@ -17,9 +18,8 @@ struct User {
     string phone;
     string password;
     vector<string> oldPasswords; // array separated by a delimiter
-    int passwordTrials;
 
-    inline User(string, string, string, string, string, vector<string>, int);
+    inline User(string, string, string, string, string, vector<string>);
 
     inline User(string, string, string, string, string);
 
@@ -37,9 +37,11 @@ inline void getChoices();
 
 inline void registerUser(User);
 
-inline void login();
+inline string login();
 
 inline void changePassword();
+
+inline string getPasswordAndCheck(bool changePassword);
 
 inline User getUserByID(string id);
 
