@@ -370,7 +370,7 @@ void makeListOfUsers() {
 
 }
 
-string convertStringToVector(vector<string>){
+string convertVectorToString(vector<string>){
 
     string oldPasswords;
 

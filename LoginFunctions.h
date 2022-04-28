@@ -62,7 +62,7 @@ inline void makeListOfIDs();
 
 inline void makeListOfUsers();
 
-inline string convertStringToVector(vector<string>);
+inline string convertVectorToString(vector<string>);
 
 inline vector<string> convertStringToVector(string oldPass);
 
