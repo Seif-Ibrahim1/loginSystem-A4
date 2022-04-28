@@ -24,7 +24,7 @@ User::User(string Name, string Email, string Password) {
     password = Password;
 }
 
-User::User(){
+User::User() {
 
 }
 
@@ -65,11 +65,10 @@ void registerUser(User human) {
     userData += human.name + '\n';
     userData += human.email + '\n';
     userData += human.phone + '\n';
-    userData += human.password +'\n';
+    userData += human.password + '\n';
     userData += human.password;
 
-    for(int i = 0; i < userData.length(); i++)
-    {
+    for (int i = 0; i < userData.length(); i++) {
         userDataFile.put(userData[i]);
     }
 
@@ -87,9 +86,9 @@ string login() {
 
     int failedTrials = 0;
 
-    while (!validUser){
+    while (!validUser) {
 
-        if (failedTrials == 3){
+        if (failedTrials == 3) {
 
             cout << "You are deprived from accessing the system" << endl << endl;
             break;
@@ -101,24 +100,24 @@ string login() {
 
         for (string ID: listIDs) {
 
-            if (id == ID){
+            if (id == ID) {
 
                 cout << "Please enter your password : " << endl;
                 cin >> password;
 
                 User userToLogin = getUserByID(id);
 
-                if (userToLogin.name == "" || userToLogin.password == "" || userToLogin.email == ""){
+                if (userToLogin.name == "" || userToLogin.password == "" || userToLogin.email == "") {
                     continue;
                 }
 
-                if (userToLogin.password == password){
+                if (userToLogin.password == password) {
 
                     cout << "Successful login, welcome " + userToLogin.name << endl << endl;
                     validUser = true;
                     continue;
 
-                }else{
+                } else {
                     failedTrials += 1;
                     id = "";
                     cout << "Failed login. Try again." << endl;
@@ -140,7 +139,7 @@ void changePassword() {
 
     string userID = login();
 
-    if (!userID.empty()){
+    if (!userID.empty()) {
 
         User currentUser = getUserByID(userID);
 
@@ -152,33 +151,38 @@ void changePassword() {
         cin >> oldPassword;
 
         // check if added before
-        while (true){
+        while (true) {
 
             bool validNewPassword = true;
 
             newPassword = getPasswordAndCheck(true);
 
-            for(string pass : currentUser.oldPasswords){
-                if (newPassword == pass){
+            for (string pass: currentUser.oldPasswords) {
+                if (newPassword == pass) {
                     validNewPassword = false;
                     break;
                 }
             }
 
 
-            if (validNewPassword){
+            if (validNewPassword) {
                 break;
             }
 
         }
 
         int userIndex = getUserIndexByID(userID);
-        if (userIndex != -1){
+        if (userIndex != -1) {
 
             listUsers[userIndex].password = newPassword;
             listUsers[userIndex].oldPasswords.push_back(newPassword);
 
             // add all users to file
+            if (saveAllUsersToFile()) {
+
+                cout << "Password changes successfully !" << endl;
+
+            }
 
         }
 
@@ -186,7 +190,7 @@ void changePassword() {
 
 }
 
-string getPasswordAndCheck(bool changePassword){
+string getPasswordAndCheck(bool changePassword) {
 
     string password;
 
@@ -210,11 +214,40 @@ string getPasswordAndCheck(bool changePassword){
 
 }
 
-User getUserByID(string id){
+bool saveAllUsersToFile() {
+
+    string userData;
+
+    fstream userDataFile("UsersDataNew.txt", ios::out);
 
     for (User user: listUsers) {
 
-        if (user.id == id){
+        userData += user.id + '\n';
+        userData += user.name + '\n';
+        userData += user.email + '\n';
+        userData += user.phone + '\n';
+        userData += user.password + '\n';
+        userData += convertVectorToString(user.oldPasswords) + '\n';
+
+    }
+
+    for (char c: userData) {
+
+        userDataFile.put(c);
+
+    }
+
+    userDataFile.close();
+
+    return true;
+
+}
+
+User getUserByID(string id) {
+
+    for (User user: listUsers) {
+
+        if (user.id == id) {
             return user;
         }
 
@@ -223,11 +256,11 @@ User getUserByID(string id){
     return listUsers[0];
 }
 
-int getUserIndexByID(string id){
+int getUserIndexByID(string id) {
 
     for (int i = 0; i < listUsers.size(); ++i) {
 
-        if (listUsers[i].id == id){
+        if (listUsers[i].id == id) {
             return i;
         }
 
@@ -370,11 +403,17 @@ void makeListOfUsers() {
 
 }
 
-string convertVectorToString(vector<string>){
+string convertVectorToString(vector<string> oldPasswords) {
 
-    string oldPasswords;
+    string oldPasswordsString = "";
 
-    return oldPasswords;
+    for (string pass: oldPasswords) {
+
+        oldPasswordsString += pass + delPass;
+
+    }
+
+    return oldPasswordsString;
 
 }
 
@@ -396,18 +435,16 @@ vector<string> convertStringToVector(string oldPass) {
             oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
 
             dilem = oldPass.find(delPass);
-        }else{
+        } else {
             break;
         }
 
     }
 
-    oldPasswords.push_back(oldPass);
-
     return oldPasswords;
 }
 
-istream& operator>> (istream&read, User human){
+istream &operator>>(istream &read, User human) {
 
     string id;
     string name;
@@ -415,22 +452,22 @@ istream& operator>> (istream&read, User human){
     string phone;
     string password;
 
-    while (true){
+    while (true) {
 
         bool validUserForRegistration = true;
 
         cout << "Enter your ID" << endl;
         read >> id;
 
-        for(string uID : listIDs){
-            if (id == uID){
+        for (string uID: listIDs) {
+            if (id == uID) {
                 validUserForRegistration = false;
                 break;
             }
         }
 
 
-        if (validUserForRegistration){
+        if (validUserForRegistration) {
             break;
         }
 

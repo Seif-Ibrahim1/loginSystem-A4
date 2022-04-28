@@ -48,6 +48,8 @@ inline void changePassword();
 
 inline string getPasswordAndCheck(bool changePassword);
 
+inline bool saveAllUsersToFile();
+
 inline User getUserByID(string id);
 
 inline int getUserIndexByID(string id);
@@ -62,7 +64,7 @@ inline void makeListOfIDs();
 
 inline void makeListOfUsers();
 
-inline string convertVectorToString(vector<string>);
+inline string convertVectorToString(vector<string> oldPasswords);
 
 inline vector<string> convertStringToVector(string oldPass);
 
