@@ -150,7 +150,6 @@ void changePassword() {
         cout << "You want to change your password," << endl;
         cout << "Please enter your OLD password :" << endl;
         cin >> oldPassword;
-        newPassword = getPasswordAndCheck(true);
 
         // check if added before
         while (true){
@@ -170,6 +169,16 @@ void changePassword() {
             if (validNewPassword){
                 break;
             }
+
+        }
+
+        int userIndex = getUserIndexByID(userID);
+        if (userIndex != -1){
+
+            listUsers[userIndex].password = newPassword;
+            listUsers[userIndex].oldPasswords.push_back(newPassword);
+
+            // add all users to file
 
         }
 
@@ -212,6 +221,20 @@ User getUserByID(string id){
     }
 
     return listUsers[0];
+}
+
+int getUserIndexByID(string id){
+
+    for (int i = 0; i < listUsers.size(); ++i) {
+
+        if (listUsers[i].id == id){
+            return i;
+        }
+
+    }
+
+    return -1;
+
 }
 
 // get index of character in string
@@ -344,6 +367,14 @@ void makeListOfUsers() {
         counter++;
     }
     userDataFile.close();
+
+}
+
+string convertStringToVector(vector<string>){
+
+    string oldPasswords;
+
+    return oldPasswords;
 
 }
 
