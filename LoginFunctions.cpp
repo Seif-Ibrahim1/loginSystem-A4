@@ -1,15 +1,13 @@
 #include "LoginFunctions.h"
 
 // Main constructor
-User::User(string ID, string Name, string Email, string Phone, string Password, vector<string> OldPasswords,
-           int PasswordTrials) {
+User::User(string ID, string Name, string Email, string Phone, string Password, vector<string> OldPasswords) {
     id = ID;
     name = Name;
     email = Email;
     phone = Phone;
     password = Password;
     oldPasswords = OldPasswords;
-    passwordTrials = PasswordTrials;
 };
 
 User::User(string ID, string Name, string Email, string Phone, string Password) {
@@ -68,9 +66,7 @@ void registerUser(User human) {
     userData += human.email + '\n';
     userData += human.phone + '\n';
     userData += human.password +'\n';
-    userData += human.password +'\n';
-    userData += "0 ";
-
+    userData += human.password;
 
     for(int i = 0; i < userData.length(); i++)
     {
@@ -82,42 +78,107 @@ void registerUser(User human) {
 
 }
 
-void login() {
+string login() {
 
-    string id;
+    string id = "";
     string password;
 
     bool validUser = false;
 
+    int failedTrials = 0;
+
     while (!validUser){
+
+        if (failedTrials == 3){
+
+            cout << "You are deprived from accessing the system" << endl << endl;
+            break;
+
+        }
 
         cout << "Please enter your ID :" << endl;
         cin >> id;
 
-        cout << "Please enter your password : " << endl;
-        cin >> password;
+        for (string ID: listIDs) {
 
-        User userToLogin = getUserByID(id);
+            if (id == ID){
 
-        if (userToLogin.name == "" || userToLogin.password == "" || userToLogin.email == ""){
-            continue;
+                cout << "Please enter your password : " << endl;
+                cin >> password;
+
+                User userToLogin = getUserByID(id);
+
+                if (userToLogin.name == "" || userToLogin.password == "" || userToLogin.email == ""){
+                    continue;
+                }
+
+                if (userToLogin.password == password){
+
+                    cout << "Successful login, welcome " + userToLogin.name << endl << endl;
+                    validUser = true;
+                    continue;
+
+                }else{
+                    failedTrials += 1;
+                    id = "";
+                    cout << "Failed login. Try again." << endl;
+                }
+
+                break;
+
+            }
+
         }
 
-        if (userToLogin.password == password){
+    }
 
-            cout << "Successful login, welcome " + userToLogin.name << endl << endl;
-            validUser = true;
-            continue;
+    return id;
 
-        }else{
-            cout << "Failed login. Try again." << endl;
-        }
+}
+
+void changePassword() {
+
+    string userID = login();
+
+    if (!userID.empty()){
+
+        User currentUser = getUserByID(userID);
+
+        string oldPassword;
+        string newPassword;
+
+        cout << "You want to change your password," << endl;
+        cout << "Please enter your OLD password :" << endl;
+        cin >> oldPassword;
+        newPassword = getPasswordAndCheck(true);
+
+        // check if added before
 
     }
 
 }
 
-void changePassword() {
+string getPasswordAndCheck(bool changePassword){
+
+    string password;
+
+    bool invalidPassword = true;
+
+    while (invalidPassword) {
+        if (changePassword) {
+            cout << "Please enter your NEW password :" << endl;
+        } else {
+            cout << "Enter your Password :" << endl;
+        }
+
+        // logic goes here
+        // get password here
+
+        invalidPassword = false; // after check
+
+    }
+
+    return password;
 
 }
 
@@ -206,7 +267,7 @@ void makeListOfIDs() {
 
         userDataFile.getline(name, 50);
 
-        if (lineNumber % 8 == 1) {
+        if (lineNumber % numberOfLinesForUser == 1) {
             listIDs.push_back(name);
         }
 
@@ -229,7 +290,6 @@ void makeListOfUsers() {
     string phone;
     string password;
     vector<string> oldPasswords; // array separated by a delimiter
-    int passwordTrials;
 
     while (!userDataFile.eof()) {
 
@@ -237,25 +297,23 @@ void makeListOfUsers() {
 
         userDataFile.getline(line, 50);
 
-        if (lineNumber % 7 == 1) {
+        if (lineNumber % numberOfLinesForUser == 1) {
             id = line;
-        } else if (lineNumber % 7 == 2) {
+        } else if (lineNumber % numberOfLinesForUser == 2) {
             name = line;
-        } else if (lineNumber % 7 == 3) {
+        } else if (lineNumber % numberOfLinesForUser == 3) {
             email = line;
-        } else if (lineNumber % 7 == 4) {
+        } else if (lineNumber % numberOfLinesForUser == 4) {
             phone = line;
-        } else if (lineNumber % 7 == 5) {
+        } else if (lineNumber % numberOfLinesForUser == 5) {
             password = line;
-        } else if (lineNumber % 7 == 6) {
+        } else if (lineNumber % numberOfLinesForUser == 0) {
             oldPasswords = convertStringToVector(line);
-        } else if (lineNumber % 7 == 0) {
-            passwordTrials = stoi(to_string(line[0])) - 48;
         }
 
-        if (counter == 7) {
+        if (counter == numberOfLinesForUser) {
 
-            User user = User(id, name, email, phone, password, oldPasswords, passwordTrials);
+            User user = User(id, name, email, phone, password, oldPasswords);
 
             listUsers.push_back(user);
 
@@ -276,38 +334,25 @@ vector<string> convertStringToVector(string oldPass) {
 
     int dilem = oldPass.find(delPass);
 
-    if (dilem != -1){
-        string firstPass = oldPass.substr(0, dilem);
+    string currentPass;
 
-        oldPasswords.push_back(firstPass);
-
-        oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
-
-        dilem = oldPass.find(delPass);
+    while (true) {
 
         if (dilem != -1) {
+            currentPass = oldPass.substr(0, dilem);
 
-            string secondPass = oldPass.substr(0, dilem);
-
-            oldPasswords.push_back(secondPass);
+            oldPasswords.push_back(currentPass);
 
             oldPass = oldPass.substr(dilem + 3, oldPass.length() - 1);
 
             dilem = oldPass.find(delPass);
-
-            if (dilem != -1) {
-
-                string thirdPass = oldPass.substr(0, dilem);
-
-                oldPasswords.push_back(thirdPass);
-
-            }
-
+        }else{
+            break;
         }
 
     }
 
-
+    oldPasswords.push_back(oldPass);
 
     return oldPasswords;
 }
@@ -320,11 +365,34 @@ istream& operator>> (istream&read, User human){
     string phone;
     string password;
 
-    read >> id;
+    while (true){
+
+        bool validUserForRegistration = true;
+
+        cout << "Enter your ID" << endl;
+        read >> id;
+
+        for(string uID : listIDs){
+            if (id == uID){
+                validUserForRegistration = false;
+                break;
+            }
+        }
+
+
+        if (validUserForRegistration){
+            break;
+        }
+
+    }
+
+    cout << "Enter your Name" << endl;
     read >> name;
+    cout << "Enter your Email" << endl;
     read >> email;
+    cout << "Enter your Phone Number" << endl;
     read >> phone;
-    read >> password;
+    password = getPasswordAndCheck(false);
 
     human.id = id;
     human.name = name;
