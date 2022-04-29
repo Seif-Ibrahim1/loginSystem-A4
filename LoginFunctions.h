@@ -56,6 +56,8 @@ inline int getUserIndexByID(string id);
 
 inline int indexOf(string str, char character);
 
+inline bool contains(string text, string characters);
+
 inline string encrypt(string pass);
 
 inline string decrypt(string encryptedPass);

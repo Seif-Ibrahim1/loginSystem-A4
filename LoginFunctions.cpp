@@ -180,7 +180,7 @@ void changePassword() {
             // add all users to file
             if (saveAllUsersToFile()) {
 
-                cout << "Password changes successfully !" << endl;
+                cout << "Password changed successfully !" << endl;
 
             }
 
@@ -284,6 +284,23 @@ int indexOf(string str, char character) {
     return 0;
 }
 
+bool contains(string text, string characters){
+
+    for (int i = 0; i < text.length(); ++i) {
+
+        for (int j = 0; j < characters.length(); ++j) {
+
+            if (text[i] == characters[j]){
+                return true;
+            }
+
+        }
+
+    }
+
+    return false;
+
+}
 
 string encrypt(string pass) {
 
