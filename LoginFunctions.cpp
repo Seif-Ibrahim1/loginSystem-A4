@@ -151,7 +151,7 @@ void changePassword() {
 
         cout << "You want to change your password," << endl;
         cout << "Please enter your OLD password :" << endl;
-        cin >> oldPassword;
+        oldPassword = hideAndGetPassword();
 
         // check if added before
 
@@ -205,13 +205,22 @@ void changePassword() {
 }
 
 string hideAndGetPassword() {
-    string password;
-    char ch;
 
-    while ((ch = _getch()) != char(13)) {
-        password += ch;
-        cout << '*';
+    char x;
+    string password;
+    
+    while(true)
+    {
+        x = getch();
+        cout << "*";
+        
+        if(x == char(13))
+            break;
+        
+        else
+            password += x;
     }
+
     cout << endl;
 
     return password;
