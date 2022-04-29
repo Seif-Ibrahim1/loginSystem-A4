@@ -168,25 +168,17 @@ void changePassword() {
 
             }
 
-            cout << "first done" << endl;
-
             while (true){
-
-                cout << "in loop" << endl;
 
                 confirmNewPassword = getPasswordAndCheck(2);
 
-                cout << "in loop 2" << endl;
-
                 if (confirmNewPassword == newPassword){
-                    cout << "second done" << endl;
                     break;
                 }
 
             }
 
             if (validNewPassword){
-                cout << "valid" << endl;
                 break;
             }
 
@@ -392,7 +384,7 @@ string decrypt(string encryptedPass) {
 
 void makeListOfIDs() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char name[50];
+    char *name;
 
     int lineNumber = 0;
     int counter = 1; // not used yet
@@ -401,7 +393,7 @@ void makeListOfIDs() {
 
         lineNumber++;
 
-        userDataFile.getline(name, 50);
+        userDataFile.getline(name, 10000);
 
         if (lineNumber % numberOfLinesForUser == 1) {
             listIDs.push_back(name);
@@ -415,7 +407,7 @@ void makeListOfIDs() {
 
 void makeListOfUsers() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char line[50];
+    char *line;
 
     int lineNumber = 0;
     int counter = 1; // not used yet
@@ -431,7 +423,7 @@ void makeListOfUsers() {
 
         lineNumber++;
 
-        userDataFile.getline(line, 50);
+        userDataFile.getline(line, 10000);
 
         if (lineNumber % numberOfLinesForUser == 1) {
             id = line;
