@@ -202,6 +202,7 @@ string getPasswordAndCheck(bool changePassword) {
 
     bool invalidPassword = true;
 
+    cin.ignore();
     while (invalidPassword) {
         if (changePassword) {
             cout << "Please enter your NEW password :" << endl;
@@ -209,11 +210,29 @@ string getPasswordAndCheck(bool changePassword) {
             cout << "Enter your Password :" << endl;
         }
 
+
         // logic goes here
-        // get password here
+        getline(cin, password);
 
-        invalidPassword = false; // after check
+        regex lowercase("[a-z]+.*");
+        regex uppercase("[A-Z]+.*");
+        regex numbers("[0-9]+.*");
+        string specialChars = " !@#$%^&*()_+-=?<>|\\/,~`;:[]{}";
 
+
+
+        if(password.length() >= 8)
+        {
+            if(regex_search(password, lowercase) && regex_search(password, uppercase)
+                && regex_search(password, lowercase) && contains(password, specialChars))
+            {
+                invalidPassword = false; 
+                break;
+            }
+        }
+
+        cout << "invalid password ! " << endl;
+        
     }
 
     return password;
@@ -502,6 +521,13 @@ istream &operator>>(istream &read, User human) {
     read >> email;
     cout << "Enter your Phone Number" << endl;
     read >> phone;
+
+    cout << "Note that password  must be at least 8 characters" << endl;
+    cout << "Must contain at least one lowecase character" << endl;
+    cout << "at least one uppercase character " << endl;
+    cout << "at least one special character" << endl;
+    cout << "at least one number" << endl;
+
     password = getPasswordAndCheck(false);
 
     human.id = id;
