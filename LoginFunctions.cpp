@@ -103,7 +103,7 @@ string login() {
             if (id == ID) {
 
                 cout << "Please enter your password : " << endl;
-                password = hideAndGetPassword();
+                cin >> password;
 
                 User userToLogin = getUserByID(id);
 
@@ -204,18 +204,6 @@ void changePassword() {
 
 }
 
-string hideAndGetPassword() {
-    string password;
-    char ch;
-
-    while ((ch = _getch()) != char(13)) {
-        password += ch;
-        cout << '*';
-    }
-    cout << endl;
-
-    return password;
-}
 
 string getPasswordAndCheck(int type) {
 
@@ -235,7 +223,7 @@ string getPasswordAndCheck(int type) {
         }
 
         // logic goes here
-        password = hideAndGetPassword();
+        cin >> password;
 
         regex lowercase("[a-z]+.*");
         regex uppercase("[A-Z]+.*");
