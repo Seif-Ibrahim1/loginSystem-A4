@@ -145,6 +145,7 @@ void changePassword() {
 
         string oldPassword;
         string newPassword;
+        string newPassword2;
 
         cout << "You want to change your password," << endl;
         cout << "Please enter your OLD password :" << endl;
@@ -164,6 +165,11 @@ void changePassword() {
                 }
             }
 
+            while (newPassword2 != newPassword){
+
+                newPassword2 = getPasswordAndCheck(true);
+
+            }
 
             if (validNewPassword) {
                 break;
