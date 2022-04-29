@@ -76,5 +76,6 @@ inline vector<string> convertStringToVector(string oldPass);
 
 inline istream &operator>>(istream &, User);
 
+inline string hideAndGetPassword();
 
 #endif
