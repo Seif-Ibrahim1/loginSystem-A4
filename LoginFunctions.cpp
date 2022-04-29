@@ -103,7 +103,8 @@ string login() {
             if (id == ID) {
 
                 cout << "Please enter your password : " << endl;
-                cin >> password;
+
+                hideAndGetPassword();
 
                 User userToLogin = getUserByID(id);
 
@@ -232,7 +233,7 @@ string getPasswordAndCheck(int type) {
         }
 
         // logic goes here
-        cin >> password;
+        password = hideAndGetPassword();
 
         regex lowercase("[a-z]+.*");
         regex uppercase("[A-Z]+.*");
@@ -392,7 +393,7 @@ string decrypt(string encryptedPass) {
 
 void makeListOfIDs() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char name[50];
+    char name[1000];
 
     int lineNumber = 0;
     int counter = 1; // not used yet
@@ -401,7 +402,7 @@ void makeListOfIDs() {
 
         lineNumber++;
 
-        userDataFile.getline(name, 50);
+        userDataFile.getline(name, 1000);
 
         if (lineNumber % numberOfLinesForUser == 1) {
             listIDs.push_back(name);
@@ -415,7 +416,7 @@ void makeListOfIDs() {
 
 void makeListOfUsers() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char line[50];
+    char line[1000];
 
     int lineNumber = 0;
     int counter = 1; // not used yet
@@ -431,7 +432,7 @@ void makeListOfUsers() {
 
         lineNumber++;
 
-        userDataFile.getline(line, 50);
+        userDataFile.getline(line, 1000);
 
         if (lineNumber % numberOfLinesForUser == 1) {
             id = line;
@@ -558,4 +559,19 @@ istream &operator>>(istream &read, User human) {
     registerUser(human);
 
     return read;
+}
+
+string hideAndGetPassword()
+{
+    string password;
+    char ch;
+
+    while((ch = _getch()) != char(13))
+    {
+        password += ch;
+        cout << '*';
+    }
+    cout << endl;
+
+    return password;
 }

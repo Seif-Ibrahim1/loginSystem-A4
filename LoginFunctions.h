@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <regex>
+#include <conio.h>
 
 using namespace std;
 
@@ -72,5 +73,7 @@ inline string convertVectorToString(vector<string> oldPasswords);
 inline vector<string> convertStringToVector(string oldPass);
 
 inline istream &operator>>(istream &, User);
+
+inline string hideAndGetPassword();
 
 #endif
