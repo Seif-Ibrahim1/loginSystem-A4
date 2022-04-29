@@ -66,7 +66,7 @@ void registerUser(User human) {
     userData += human.email + '\n';
     userData += human.phone + '\n';
     userData += human.password + '\n';
-    userData += human.password;
+    userData += convertVectorToString(human.oldPasswords);
 
     for (int i = 0; i < userData.length(); i++) {
         userDataFile.put(userData[i]);
@@ -103,8 +103,7 @@ string login() {
             if (id == ID) {
 
                 cout << "Please enter your password : " << endl;
-
-                hideAndGetPassword();
+                password = hideAndGetPassword();
 
                 User userToLogin = getUserByID(id);
 
@@ -156,44 +155,34 @@ void changePassword() {
 
         // check if added before
 
-        while (true){
+        while (true) {
 
             newPassword = getPasswordAndCheck(1);
 
-            for(string pass : currentUser.oldPasswords){
+            for (string pass: currentUser.oldPasswords) {
 
-                if (pass == newPassword){
+                if (pass == newPassword) {
                     validNewPassword = false;
                     break;
                 }
 
             }
 
-            cout << "first done" << endl;
-
-            while (true){
-
-                cout << "in loop" << endl;
+            while (true) {
 
                 confirmNewPassword = getPasswordAndCheck(2);
 
-                cout << "in loop 2" << endl;
-
-                if (confirmNewPassword == newPassword){
-                    cout << "second done" << endl;
+                if (confirmNewPassword == newPassword) {
                     break;
                 }
 
             }
 
-            if (validNewPassword){
-                cout << "valid" << endl;
+            if (validNewPassword) {
                 break;
             }
 
         }
-
-
 
 
         int userIndex = getUserIndexByID(userID);
@@ -215,6 +204,19 @@ void changePassword() {
 
 }
 
+string hideAndGetPassword() {
+    string password;
+    char ch;
+
+    while ((ch = _getch()) != char(13)) {
+        password += ch;
+        cout << '*';
+    }
+    cout << endl;
+
+    return password;
+}
+
 string getPasswordAndCheck(int type) {
 
     string password;
@@ -226,9 +228,9 @@ string getPasswordAndCheck(int type) {
     while (invalidPassword) {
         if (type == 0) {
             cout << "Enter your Password :" << endl;
-        } else if (type == 1){
+        } else if (type == 1) {
             cout << "Please enter your NEW password :" << endl;
-        }else if (type == 2){
+        } else if (type == 2) {
             cout << "Confirm your new Password :" << endl;
         }
 
@@ -240,11 +242,9 @@ string getPasswordAndCheck(int type) {
         regex numbers("[0-9]+.*");
         string specialChars = "!@#$%^&*()_+-=?<>|\\/,~`;:[]{}";
 
-        if(password.length() >= 8)
-        {
-            if(regex_search(password, lowercase) && regex_search(password, uppercase)
-                && regex_search(password, numbers) && contains(password, specialChars))
-            {
+        if (password.length() >= 8) {
+            if (regex_search(password, lowercase) && regex_search(password, uppercase)
+                && regex_search(password, numbers) && contains(password, specialChars)) {
                 invalidPassword = false;
             }
         }
@@ -252,7 +252,7 @@ string getPasswordAndCheck(int type) {
         if (invalidPassword) {
             cout << "invalid password ! " << endl;
         }
-        
+
     }
 
     return password;
@@ -329,13 +329,13 @@ int indexOf(string str, char character) {
     return 0;
 }
 
-bool contains(string text, string characters){
+bool contains(string text, string characters) {
 
     for (int i = 0; i < text.length(); ++i) {
 
         for (int j = 0; j < characters.length(); ++j) {
 
-            if (text[i] == characters[j]){
+            if (text[i] == characters[j]) {
                 return true;
             }
 
@@ -393,7 +393,7 @@ string decrypt(string encryptedPass) {
 
 void makeListOfIDs() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char name[1000];
+    char *name;
 
     int lineNumber = 0;
     int counter = 1; // not used yet
@@ -402,7 +402,7 @@ void makeListOfIDs() {
 
         lineNumber++;
 
-        userDataFile.getline(name, 1000);
+        userDataFile.getline(name, 10000);
 
         if (lineNumber % numberOfLinesForUser == 1) {
             listIDs.push_back(name);
@@ -416,7 +416,7 @@ void makeListOfIDs() {
 
 void makeListOfUsers() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char line[1000];
+    char *line;
 
     int lineNumber = 0;
     int counter = 1; // not used yet
@@ -432,7 +432,7 @@ void makeListOfUsers() {
 
         lineNumber++;
 
-        userDataFile.getline(line, 1000);
+        userDataFile.getline(line, 10000);
 
         if (lineNumber % numberOfLinesForUser == 1) {
             id = line;
@@ -555,23 +555,9 @@ istream &operator>>(istream &read, User human) {
     human.email = email;
     human.phone = phone;
     human.password = password;
+    human.oldPasswords.push_back(password);
 
     registerUser(human);
 
     return read;
-}
-
-string hideAndGetPassword()
-{
-    string password;
-    char ch;
-
-    while((ch = _getch()) != char(13))
-    {
-        password += ch;
-        cout << '*';
-    }
-    cout << endl;
-
-    return password;
 }
