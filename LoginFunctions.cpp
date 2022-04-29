@@ -145,44 +145,55 @@ void changePassword() {
 
         string oldPassword;
         string newPassword;
-        string newPassword2 = "";
+        string confirmNewPassword;
+
+        bool validNewPassword = true;
 
         cout << "You want to change your password," << endl;
         cout << "Please enter your OLD password :" << endl;
         cin >> oldPassword;
 
         // check if added before
-        while (true) {
 
-            bool validNewPassword = true;
-            bool validNewPassword2 = false;
+        while (true){
 
-            newPassword = getPasswordAndCheck(true);
+            newPassword = getPasswordAndCheck(1);
 
-            for (string pass: currentUser.oldPasswords) {
-                if (newPassword == pass) {
+            for(string pass : currentUser.oldPasswords){
+
+                if (pass == newPassword){
                     validNewPassword = false;
                     break;
                 }
+
             }
 
-            while (!validNewPassword2){
+            cout << "first done" << endl;
 
-                cout << "Re-enter your NEW password" << endl;
+            while (true){
 
-                newPassword2 = getPasswordAndCheck(true);
+                cout << "in loop" << endl;
 
-                if (newPassword2 == newPassword){
-                    validNewPassword2 = true;
+                confirmNewPassword = getPasswordAndCheck(2);
+
+                cout << "in loop 2" << endl;
+
+                if (confirmNewPassword == newPassword){
+                    cout << "second done" << endl;
+                    break;
                 }
 
             }
 
-            if (validNewPassword && validNewPassword2) {
+            if (validNewPassword){
+                cout << "valid" << endl;
                 break;
             }
 
         }
+
+
+
 
         int userIndex = getUserIndexByID(userID);
         if (userIndex != -1) {
@@ -203,42 +214,43 @@ void changePassword() {
 
 }
 
-string getPasswordAndCheck(bool changePassword) {
+string getPasswordAndCheck(int type) {
 
     string password;
 
     bool invalidPassword = true;
 
     cin.ignore();
+
     while (invalidPassword) {
-        if (changePassword) {
-            cout << "Please enter your NEW password :" << endl;
-        } else {
+        if (type == 0) {
             cout << "Enter your Password :" << endl;
+        } else if (type == 1){
+            cout << "Please enter your NEW password :" << endl;
+        }else if (type == 2){
+            cout << "Confirm your new Password :" << endl;
         }
 
-
         // logic goes here
-        getline(cin, password);
+        cin >> password;
 
         regex lowercase("[a-z]+.*");
         regex uppercase("[A-Z]+.*");
         regex numbers("[0-9]+.*");
-        string specialChars = " !@#$%^&*()_+-=?<>|\\/,~`;:[]{}";
-
-
+        string specialChars = "!@#$%^&*()_+-=?<>|\\/,~`;:[]{}";
 
         if(password.length() >= 8)
         {
             if(regex_search(password, lowercase) && regex_search(password, uppercase)
-                && regex_search(password, lowercase) && contains(password, specialChars))
+                && regex_search(password, numbers) && contains(password, specialChars))
             {
-                invalidPassword = false; 
-                break;
+                invalidPassword = false;
             }
         }
 
-        cout << "invalid password ! " << endl;
+        if (invalidPassword) {
+            cout << "invalid password ! " << endl;
+        }
         
     }
 
@@ -535,7 +547,7 @@ istream &operator>>(istream &read, User human) {
     cout << "at least one special character" << endl;
     cout << "at least one number" << endl;
 
-    password = getPasswordAndCheck(false);
+    password = getPasswordAndCheck(0);
 
     human.id = id;
     human.name = name;
