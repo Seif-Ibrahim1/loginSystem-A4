@@ -47,7 +47,7 @@ inline string login();
 
 inline void changePassword();
 
-inline string getPasswordAndCheck(bool changePassword);
+inline string getPasswordAndCheck(int type);
 
 inline bool saveAllUsersToFile();
 
