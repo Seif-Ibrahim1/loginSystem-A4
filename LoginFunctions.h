@@ -48,6 +48,8 @@ inline string login();
 
 inline void changePassword();
 
+inline string hideAndGetPassword();
+
 inline string getPasswordAndCheck(int type);
 
 inline bool saveAllUsersToFile();

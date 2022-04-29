@@ -9,7 +9,6 @@ int main() {
 
     getChoices();
 
-
 //    listUsers[1].oldPasswords[2] = "Changed passss";
 //    saveAllUsersToFile();
 
