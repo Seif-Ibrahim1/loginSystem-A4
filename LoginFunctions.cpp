@@ -393,7 +393,7 @@ string decrypt(string encryptedPass) {
 
 void makeListOfIDs() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char *name;
+    char name[10000];
 
     int lineNumber = 0;
     int counter = 1; // not used yet
@@ -416,7 +416,7 @@ void makeListOfIDs() {
 
 void makeListOfUsers() {
     fstream userDataFile("UsersData.txt", ios::app | ios::in);
-    char *line;
+    char line[10000];
 
     int lineNumber = 0;
     int counter = 1; // not used yet
