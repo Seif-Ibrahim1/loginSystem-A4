@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <regex>
-#include <conio.h>
 
 using namespace std;
 
