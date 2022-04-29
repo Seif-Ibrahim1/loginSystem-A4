@@ -145,7 +145,7 @@ void changePassword() {
 
         string oldPassword;
         string newPassword;
-        string newPassword2;
+        string newPassword2 = "";
 
         cout << "You want to change your password," << endl;
         cout << "Please enter your OLD password :" << endl;
@@ -155,6 +155,7 @@ void changePassword() {
         while (true) {
 
             bool validNewPassword = true;
+            bool validNewPassword2 = false;
 
             newPassword = getPasswordAndCheck(true);
 
@@ -165,13 +166,19 @@ void changePassword() {
                 }
             }
 
-            while (newPassword2 != newPassword){
+            while (!validNewPassword2){
+
+                cout << "Re-enter your NEW password" << endl;
 
                 newPassword2 = getPasswordAndCheck(true);
 
+                if (newPassword2 == newPassword){
+                    validNewPassword2 = true;
+                }
+
             }
 
-            if (validNewPassword) {
+            if (validNewPassword && validNewPassword2) {
                 break;
             }
 
