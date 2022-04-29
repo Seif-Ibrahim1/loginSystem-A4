@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <regex>
+#include <conio.h>
 
 using namespace std;
 
@@ -46,6 +47,8 @@ inline void registerUser(User);
 inline string login();
 
 inline void changePassword();
+
+inline string hideAndGetPassword();
 
 inline string getPasswordAndCheck(int type);
 

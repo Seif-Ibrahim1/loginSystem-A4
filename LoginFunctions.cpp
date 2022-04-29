@@ -66,7 +66,7 @@ void registerUser(User human) {
     userData += human.email + '\n';
     userData += human.phone + '\n';
     userData += human.password + '\n';
-    userData += human.password;
+    userData += convertVectorToString(human.oldPasswords);
 
     for (int i = 0; i < userData.length(); i++) {
         userDataFile.put(userData[i]);
@@ -103,7 +103,7 @@ string login() {
             if (id == ID) {
 
                 cout << "Please enter your password : " << endl;
-                cin >> password;
+                password = hideAndGetPassword();
 
                 User userToLogin = getUserByID(id);
 
@@ -155,36 +155,34 @@ void changePassword() {
 
         // check if added before
 
-        while (true){
+        while (true) {
 
             newPassword = getPasswordAndCheck(1);
 
-            for(string pass : currentUser.oldPasswords){
+            for (string pass: currentUser.oldPasswords) {
 
-                if (pass == newPassword){
+                if (pass == newPassword) {
                     validNewPassword = false;
                     break;
                 }
 
             }
 
-            while (true){
+            while (true) {
 
                 confirmNewPassword = getPasswordAndCheck(2);
 
-                if (confirmNewPassword == newPassword){
+                if (confirmNewPassword == newPassword) {
                     break;
                 }
 
             }
 
-            if (validNewPassword){
+            if (validNewPassword) {
                 break;
             }
 
         }
-
-
 
 
         int userIndex = getUserIndexByID(userID);
@@ -206,6 +204,19 @@ void changePassword() {
 
 }
 
+string hideAndGetPassword() {
+    string password;
+    char ch;
+
+    while ((ch = _getch()) != char(13)) {
+        password += ch;
+        cout << '*';
+    }
+    cout << endl;
+
+    return password;
+}
+
 string getPasswordAndCheck(int type) {
 
     string password;
@@ -217,25 +228,23 @@ string getPasswordAndCheck(int type) {
     while (invalidPassword) {
         if (type == 0) {
             cout << "Enter your Password :" << endl;
-        } else if (type == 1){
+        } else if (type == 1) {
             cout << "Please enter your NEW password :" << endl;
-        }else if (type == 2){
+        } else if (type == 2) {
             cout << "Confirm your new Password :" << endl;
         }
 
         // logic goes here
-        cin >> password;
+        password = hideAndGetPassword();
 
         regex lowercase("[a-z]+.*");
         regex uppercase("[A-Z]+.*");
         regex numbers("[0-9]+.*");
         string specialChars = "!@#$%^&*()_+-=?<>|\\/,~`;:[]{}";
 
-        if(password.length() >= 8)
-        {
-            if(regex_search(password, lowercase) && regex_search(password, uppercase)
-                && regex_search(password, numbers) && contains(password, specialChars))
-            {
+        if (password.length() >= 8) {
+            if (regex_search(password, lowercase) && regex_search(password, uppercase)
+                && regex_search(password, numbers) && contains(password, specialChars)) {
                 invalidPassword = false;
             }
         }
@@ -243,7 +252,7 @@ string getPasswordAndCheck(int type) {
         if (invalidPassword) {
             cout << "invalid password ! " << endl;
         }
-        
+
     }
 
     return password;
@@ -320,13 +329,13 @@ int indexOf(string str, char character) {
     return 0;
 }
 
-bool contains(string text, string characters){
+bool contains(string text, string characters) {
 
     for (int i = 0; i < text.length(); ++i) {
 
         for (int j = 0; j < characters.length(); ++j) {
 
-            if (text[i] == characters[j]){
+            if (text[i] == characters[j]) {
                 return true;
             }
 
@@ -546,6 +555,7 @@ istream &operator>>(istream &read, User human) {
     human.email = email;
     human.phone = phone;
     human.password = password;
+    human.oldPasswords.push_back(password);
 
     registerUser(human);
 
