@@ -551,7 +551,7 @@ istream &operator>>(istream &read, User human) {
     cout << "Enter your Phone Number" << endl;
     read >> phone;
 
-    cout << "Note that password  must be at least 8 characters without any spaces" << endl;
+    cout << "*Note that password  must be -At least 8 characters without any spaces" << endl;
     cout << "Must contain : -At least one lowecase character" << endl;
     cout << "-At least one uppercase character " << endl;
     cout << "-At least one special character" << endl;
