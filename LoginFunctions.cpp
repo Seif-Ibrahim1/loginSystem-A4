@@ -624,12 +624,12 @@ istream &operator>>(istream &read, User human) {
 
         getline(read, phone);
 
-        for (int i = 0; i < phone.length(); ++i) {
+        if(!regex_match(phone, phoneFormat)){
+            cout << "Invalid Egyptian phone number" << endl;
+            continue;
+        }
 
-            if(!regex_match(phone, phoneFormat)){
-                cout << "Invalid Egyptian phone number" << endl;
-                break;
-            }
+        for (int i = 0; i < phone.length(); ++i) {
 
             if (isspace(phone[i])){
                 break;
