@@ -103,7 +103,7 @@ string login() {
             if (id == ID) {
 
                 cout << "Please enter your password : " << endl;
-                password = hideAndGetPassword();
+                password = decrypt(hideAndGetPassword());
 
                 User userToLogin = getUserByID(id);
 
@@ -188,6 +188,8 @@ void changePassword() {
         int userIndex = getUserIndexByID(userID);
         if (userIndex != -1) {
 
+            newPassword = encrypt(newPassword);
+
             listUsers[userIndex].password = newPassword;
             listUsers[userIndex].oldPasswords.push_back(newPassword);
 
@@ -231,8 +233,6 @@ string getPasswordAndCheck(int type) {
     string password;
 
     bool invalidPassword = true;
-
-    cin.ignore();
 
     while (invalidPassword) {
         if (type == 0) {
@@ -366,7 +366,12 @@ string encrypt(string pass) {
         if (isalpha(c)) {
             // print the character by getting its index from the ALPHABET and using the index in the reverse ALPHABET
             // convert to upper case
-            encryptedPass += ALPHABET_REVERSED[indexOf(ALPHABET, toupper(c))];
+            if(isupper(c)){
+                encryptedPass += ALPHABET_REVERSED[indexOf(ALPHABET, c)];
+            } else if(islower(c)){
+                encryptedPass += ALPHABET_REVERSED_LOWER[indexOf(ALPHABET_LOWER, c)];
+            }
+
 
         } else {
             encryptedPass += c;
@@ -388,8 +393,11 @@ string decrypt(string encryptedPass) {
         if (isalpha(c)) {
             // print the character by getting its index from the reversed ALPHABET and using the index in the ALPHABET
             // convert to upper case
-            pass += ALPHABET[indexOf(ALPHABET_REVERSED, toupper(c))];
-
+            if(isupper(c)){
+                encryptedPass += ALPHABET[indexOf(ALPHABET_REVERSED, c)];
+            } else if(islower(c)){
+                encryptedPass += ALPHABET_LOWER[indexOf(ALPHABET_REVERSED_LOWER, c)];
+            }
         } else {
             pass += c;
         }
@@ -523,6 +531,7 @@ istream &operator>>(istream &read, User human) {
     string phone;
     string password;
 
+    // ID validation
     while (true) {
 
         bool validUserForRegistration = true;
@@ -544,12 +553,93 @@ istream &operator>>(istream &read, User human) {
 
     }
 
-    cout << "Enter your Name" << endl;
-    read >> name;
-    cout << "Enter your Email" << endl;
-    read >> email;
-    cout << "Enter your Phone Number" << endl;
-    read >> phone;
+    // Name validation
+    bool validUserName = false;
+    read.ignore();
+    while (!validUserName) {
+
+        cout << "Enter your Name" << endl;
+
+        getline(read, name);
+
+        if (contains(name, "1234567890!@#$%^&*()_+-={}[]:;,?/")){
+            cout << "Invalid name" << endl;
+            continue;
+        }
+
+        for (int i = 0; i < name.length(); ++i) {
+
+            if (isspace(name[i])){
+                name[i] = '-';
+            }
+
+            validUserName = true;
+
+        }
+
+    }
+
+//    cout << name << endl;
+
+    // Email validation
+    bool validEmail = false;
+    regex emailFormat("^[a-z\\d]+[@]{1}[a-z]{2,}[.]{1}[a-z]{2,}$");
+    while (!validEmail) {
+
+        cout << "Enter your Email" << endl;
+
+        getline(read, email);
+
+        for (int i = 0; i < email.length(); ++i) {
+
+            email[i] = tolower(email[i]);
+
+        }
+
+        if(!regex_match(email, emailFormat)){
+            cout << "Invalid email address" << endl;
+            continue;
+        }
+
+        for (int i = 0; i < email.length(); ++i) {
+
+            if (isspace(email[i])){
+                break;
+            }
+
+            validEmail = true;
+
+        }
+
+    }
+
+//    cout << email << endl;
+
+    // Phone validation
+    bool validPhone = false;
+    regex phoneFormat("^(2)?(01){1}[0-9]{9}$");
+    while (!validPhone) {
+
+        cout << "Enter your Phone number" << endl;
+
+        getline(read, phone);
+
+        if(!regex_match(phone, phoneFormat)){
+            cout << "Invalid Egyptian phone number" << endl;
+            continue;
+        }
+
+        for (int i = 0; i < phone.length(); ++i) {
+
+            if (isspace(phone[i])){
+                break;
+            }
+
+            validPhone = true;
+
+        }
+
+    }
 
     cout << "*Note that password  must be -At least 8 characters without any spaces" << endl;
     cout << "Must contain : -At least one lowecase character" << endl;
@@ -557,7 +647,7 @@ istream &operator>>(istream &read, User human) {
     cout << "-At least one special character" << endl;
     cout << "-At least one number" << endl;
 
-    password = getPasswordAndCheck(0);
+    password = encrypt(getPasswordAndCheck(0));
 
     human.id = id;
     human.name = name;

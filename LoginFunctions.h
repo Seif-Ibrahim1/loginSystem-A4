@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include <regex>
+#include <conio.h>
 
 using namespace std;
 
@@ -12,6 +13,8 @@ using namespace std;
 // ---DO NOT CHANGE--- ALPHABET characters and reversed
 const string ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const string ALPHABET_REVERSED = "ZYXWVUTSRQPONMLKJIHGFEDCBA";
+const string ALPHABET_LOWER = "abcdefghijklmnopqrstuvwxyz";
+const string ALPHABET_REVERSED_LOWER = "zyxwvutsrqponmlkjihgfedcba";
 // ---DO NOT CHANGE---
 
 const string delPass = "#$#";
