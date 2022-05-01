@@ -592,10 +592,16 @@ istream &operator>>(istream &read, User human) {
 
         for (int i = 0; i < email.length(); ++i) {
 
-            if(!regex_match(email, emailFormat)){
-                cout << "Invalid email address" << endl;
-                break;
-            }
+            email[i] = tolower(email[i]);
+
+        }
+
+        if(!regex_match(email, emailFormat)){
+            cout << "Invalid email address" << endl;
+            continue;
+        }
+
+        for (int i = 0; i < email.length(); ++i) {
 
             if (isspace(email[i])){
                 break;
