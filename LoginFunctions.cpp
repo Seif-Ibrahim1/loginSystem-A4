@@ -103,7 +103,7 @@ string login() {
             if (id == ID) {
 
                 cout << "Please enter your password : " << endl;
-                password = hideAndGetPassword();
+                password = decrypt(hideAndGetPassword());
 
                 User userToLogin = getUserByID(id);
 
@@ -187,6 +187,8 @@ void changePassword() {
 
         int userIndex = getUserIndexByID(userID);
         if (userIndex != -1) {
+
+            newPassword = encrypt(newPassword);
 
             listUsers[userIndex].password = newPassword;
             listUsers[userIndex].oldPasswords.push_back(newPassword);
@@ -544,8 +546,33 @@ istream &operator>>(istream &read, User human) {
 
     }
 
-    cout << "Enter your Name" << endl;
-    read >> name;
+
+    bool validUserName = false;
+    read.ignore();
+    while (!validUserName) {
+
+        cout << "Enter your Name" << endl;
+
+        getline(read, name);
+
+        for (int i = 0; i < name.length(); ++i) {
+
+            if (contains(name, "1234567890!@#$%^&*()_+-={}[]:;,?/")){
+                break;
+            }
+
+            if (isspace(name[i])){
+                name[i] = '-';
+            }
+
+            validUserName = true;
+
+        }
+
+    }
+
+    cout << name << endl;
+
     cout << "Enter your Email" << endl;
     read >> email;
     cout << "Enter your Phone Number" << endl;
@@ -557,7 +584,7 @@ istream &operator>>(istream &read, User human) {
     cout << "-At least one special character" << endl;
     cout << "-At least one number" << endl;
 
-    password = getPasswordAndCheck(0);
+    password = encrypt(getPasswordAndCheck(0));
 
     human.id = id;
     human.name = name;
